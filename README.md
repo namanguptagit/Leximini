@@ -10,12 +10,12 @@ LexiMini is a fast, minimal Byte-Pair Encoding (BPE) tokenizer implemented in Ru
 
 ---
 
-## 🚀 Quick Start (Python)
+##  Quick Start (Python)
 
 You can easily install the pre-compiled version using `pip`:
 
 ```bash
-pip install leximini
+pip3 install leximini
 ```
 
 ### Basic Usage
