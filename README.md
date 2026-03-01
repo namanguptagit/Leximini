@@ -14,8 +14,14 @@ LexiMini is a fast, minimal Byte-Pair Encoding (BPE) tokenizer implemented in Ru
 
 You can easily install the pre-compiled version using `pip`:
 
+### macOS & Linux
 ```bash
 pip3 install leximini
+```
+
+### Windows
+```powershell
+pip install leximini
 ```
 
 ### Basic Usage
