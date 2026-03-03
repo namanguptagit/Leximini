@@ -55,7 +55,7 @@ assert decoded_text == text_to_encode
 ## 🛠️ Building from Source
 
 If you want to modify the source code or build the extension yourself locally, you will need:
-- **Python 3.7+**
+- **Python 3.8+**
 - **Rust and Cargo**: Install from [rustup.rs](https://rustup.rs/)
 
 ### Instructions

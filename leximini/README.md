@@ -5,7 +5,7 @@ A minimal byte-pair encoding (BPE) tokenizer implementation in Rust, with Python
 ## Requirements
 
 To install and build this package from source, you will need:
-- **Python 3.7+**
+- **Python 3.8+**
 - **Rust and Cargo**: Install from [rustup.rs](https://rustup.rs/)
 
 ## Installation

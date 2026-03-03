@@ -6,7 +6,7 @@ build-backend = "maturin"
 name = "leximini"
 version = "0.1.0"
 description = "LexiMini: A Rust-based BPE tokenizer for Python"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
