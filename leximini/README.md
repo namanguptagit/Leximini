@@ -1,58 +1,72 @@
 # LexiMini
 
-A minimal byte-pair encoding (BPE) tokenizer implementation in Rust, with Python bindings via PyO3.
+A fast, minimal **Byte-Pair Encoding (BPE)** tokenizer implemented in **Rust**, with seamless Python bindings via **PyO3**.
 
-## Requirements
+##  Highlights
 
-To install and build this package from source, you will need:
-- **Python 3.8+**
-- **Rust and Cargo**: Install from [rustup.rs](https://rustup.rs/)
+- **⚡ Fast** — Core tokenization logic written in Rust for maximum performance
+- ** Minimal** — Clean, readable implementation — great for learning how BPE works
+- ** Pythonic** — Drop-in Python module via native PyO3 extensions
+- ** Trainable** — Train your own BPE vocabulary directly from Python
 
-## Installation
-
-Because this library includes native Rust code, it needs to be compiled when installed.
-
-From the `leximini` directory (the folder containing this `pyproject.toml` and `Cargo.toml`), simply run:
+## Quick Start
 
 ```bash
-pip install .
+pip install leximini
 ```
 
-Behind the scenes, the `maturin` build system will automatically invoke Cargo to compile the Rust extension and install it seamlessly into your active Python environment.
-
-## Usage
-
-Once installed, you can import and use it in Python just like `tiktoken`.
-
-### 1. Initialization
 ```python
 import leximini
 
-# Initialize the tokenizer
+# Initialize
+tokenizer = leximini.get_encoding("gpt2")
+
+# Train on your corpus
+tokenizer.train("The quick brown fox jumps over the lazy dog.", 270)
+
+# Encode & Decode
+tokens = tokenizer.encode("The quick brown fox")
+decoded = tokenizer.decode(tokens)
+assert decoded == "The quick brown fox"
+```
+
+## Requirements
+
+- **Python 3.8+**
+- **Rust and Cargo** (for building from source): Install from [rustup.rs](https://rustup.rs/)
+
+## Building from Source
+
+From the `leximini` directory (the folder containing `pyproject.toml` and `Cargo.toml`):
+
+```bash
+pip install maturin
+pip install .
+```
+
+Behind the scenes, the `maturin` build system will automatically invoke Cargo to compile the Rust extension and install it into your active Python environment.
+
+## API Reference
+
+### Initialization
+```python
+import leximini
 tokenizer = leximini.get_encoding("gpt2")
 ```
 
-### 2. Training (BPE)
-The tokenizer needs to learn byte-pair merges from a sample corpus. Provide a text string and your target vocabulary size (must be >= 256 for the base ASCII bytes).
+### Training (BPE)
+Train byte-pair merges from a sample corpus. Target vocabulary size must be ≥ 256 (base ASCII bytes).
 
 ```python
-sample_text = "The quick brown fox jumps over the lazy dog."
-target_vocab_size = 270 # 256 base bytes + 14 merged tokens
-
-tokenizer.train(sample_text, target_vocab_size)
+tokenizer.train("your training text here", 270)  # 256 base + 14 merges
 ```
 
-### 3. Encoding and Decoding
-Once trained, use `encode` to compress text into token IDs, and `decode` to reconstruct the string losslessly.
-
+### Encoding & Decoding
 ```python
-text_to_encode = "The quick brown fox"
-
-# Encode
-tokens = tokenizer.encode(text_to_encode)
-print(tokens) # Output will be a list of integers, e.g. [84, 104, 101, 260, ...]
-
-# Decode
-decoded_text = tokenizer.decode(tokens)
-assert decoded_text == text_to_encode
+tokens = tokenizer.encode("The quick brown fox")   # → list of ints
+text = tokenizer.decode(tokens)                     # → original string
 ```
+
+## License
+
+MIT

@@ -5,10 +5,26 @@ build-backend = "maturin"
 [project]
 name = "leximini"
 version = "0.1.0"
-description = "LexiMini: A Rust-based BPE tokenizer for Python"
+description = "LexiMini: A fast, minimal Rust-based BPE tokenizer for Python"
+readme = "README.md"
+license = { text = "MIT" }
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: Python :: Implementation :: PyPy",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Text Processing :: Linguistic",
 ]
+
+[project.urls]
+Homepage = "https://github.com/namanguptagit/Leximini"
+Repository = "https://github.com/namanguptagit/Leximini"
+Issues = "https://github.com/namanguptagit/Leximini/issues"
