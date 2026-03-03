@@ -1,5 +1,6 @@
 use pyo3::prelude::*;
-use pyo3::types::PySet;
+use pyo3::types::{PyModule, PySet};
+use pyo3::Bound;
 use std::collections::HashMap;
 
 #[pyclass]
@@ -22,18 +23,18 @@ impl Tokenizer {
         }
     }
 
-    // Training the Tokenizer on test string , in vocab range of 256
     #[pyo3(signature = (text, vocab_size))]
     fn train(&mut self, text: &str, vocab_size: usize) -> PyResult<()> {
         if vocab_size < 256 {
-            return Err(pyo3::exceptions::PyValueError::new_err("vocab_size must be >= 256"));
+            return Err(pyo3::exceptions::PyValueError::new_err(
+                "vocab_size must be >= 256",
+            ));
         }
 
         let num_merges = vocab_size - 256;
         let mut tokens: Vec<u32> = text.bytes().map(|b| b as u32).collect();
 
         for i in 0..num_merges {
-
             let mut stats: HashMap<(u32, u32), usize> = HashMap::new();
             for window in tokens.windows(2) {
                 let pair = (window[0], window[1]);
@@ -62,7 +63,7 @@ impl Tokenizer {
 
     #[allow(unused_variables)]
     #[pyo3(signature = (text, allowed_special=None))]
-    fn encode(&self, text: &str, allowed_special: Option<&PySet>) -> PyResult<Vec<u32>> {
+    fn encode(&self, text: &str, allowed_special: Option<&Bound<'_, PySet>>) -> PyResult<Vec<u32>> {
         let mut tokens: Vec<u32> = text.bytes().map(|b| b as u32).collect();
 
         loop {
@@ -104,13 +105,19 @@ impl Tokenizer {
             if let Some(token_bytes) = self.vocab.get(&t) {
                 bytes.extend(token_bytes);
             } else {
-                return Err(pyo3::exceptions::PyValueError::new_err(format!("Token {} not in vocabulary", t)));
+                return Err(pyo3::exceptions::PyValueError::new_err(format!(
+                    "Token {} not in vocabulary",
+                    t
+                )));
             }
         }
 
         match String::from_utf8(bytes) {
             Ok(s) => Ok(s),
-            Err(e) => Err(pyo3::exceptions::PyValueError::new_err(format!("Invalid UTF-8 sequence: {}", e))),
+            Err(e) => Err(pyo3::exceptions::PyValueError::new_err(format!(
+                "Invalid UTF-8 sequence: {}",
+                e
+            ))),
         }
     }
 }
@@ -119,7 +126,7 @@ impl Tokenizer {
     fn apply_merge(tokens: &[u32], pair: (u32, u32), new_token_id: u32) -> Vec<u32> {
         let mut new_tokens = Vec::with_capacity(tokens.len());
         let mut i = 0;
-        
+
         while i < tokens.len() {
             if i < tokens.len() - 1 && tokens[i] == pair.0 && tokens[i + 1] == pair.1 {
                 new_tokens.push(new_token_id);
@@ -139,7 +146,7 @@ fn get_encoding(_name: &str) -> PyResult<Tokenizer> {
 }
 
 #[pymodule]
-fn leximini(_py: Python, m: &PyModule) -> PyResult<()> {
+fn leximini(_py: Python, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<Tokenizer>()?;
     m.add_function(wrap_pyfunction!(get_encoding, m)?)?;
     Ok(())
