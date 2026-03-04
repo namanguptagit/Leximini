@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "leximini"
-version = "0.1.0"
+version = "0.1.1"
 description = "LexiMini: A fast, minimal Rust-based BPE tokenizer for Python"
 readme = "README.md"
 license = { text = "MIT" }
