@@ -4,10 +4,10 @@ A fast, minimal **Byte-Pair Encoding (BPE)** tokenizer implemented in **Rust**, 
 
 ##  Highlights
 
-- **⚡ Fast** — Core tokenization logic written in Rust for maximum performance
-- ** Minimal** — Clean, readable implementation — great for learning how BPE works
-- ** Pythonic** — Drop-in Python module via native PyO3 extensions
-- ** Trainable** — Train your own BPE vocabulary directly from Python
+- **Fast** — Core tokenization logic written in Rust for maximum performance
+- **Minimal** — Clean, readable implementation — great for learning how BPE works
+- **Pythonic** — Drop-in Python module via native PyO3 extensions
+- **Trainable** — Train your own BPE vocabulary directly from Python
 
 ## Quick Start
 
